@@ -28,13 +28,20 @@ public class Main {
 		
 		ProblemPrinter printer = new ProblemPrinter();
 		
-		for (int i = 0; i< 10; i++) {	
+		for (int i = 0; i< 20; i++) {	
 			printer.writeHeader();
-			printer.writeBody(additionGenerator_2X1_, 12/*problemAlongX*/, 3/*problemAlongY*/);		
-			printer.writeBody(additionGenerator_3X2_, 12/*problemAlongX*/, 2/*problemAlongY*/);
+			printer.writeBody(additionGenerator_2X1_, 12/*problemAlongX*/, 5/*problemAlongY*/);		
 			
 			printer.writeFooter();
 		}
+		
+//		for (int i = 0; i< 10; i++) {	
+//			printer.writeHeader();
+//			printer.writeBody(additionGenerator_2X1_, 12/*problemAlongX*/, 3/*problemAlongY*/);		
+//			printer.writeBody(additionGenerator_3X2_, 12/*problemAlongX*/, 2/*problemAlongY*/);
+//			
+//			printer.writeFooter();
+//		}
 		
 //		for (int i = 0; i< 5; i++) {    
 //		    printer.writeHeader();
