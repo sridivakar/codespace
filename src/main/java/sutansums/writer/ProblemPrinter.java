@@ -13,7 +13,8 @@ public class ProblemPrinter {
 
 	/*
 	 * Notepad 
-	 * 	Page set up : Left = 1"; Right = 1"; Top = 0.5"; Bottom = 0.5"
+	 *  Page Size : Letter
+	 * 	Page set up : Left = 1"; Right = 1"; Top = 0.75"; Bottom = 0.75"
 	 *  Font : Courier New + Bold, Size 16
 	 *  COLUMNS = 46, ROWS = 42
 	 */
