@@ -1,24 +1,23 @@
 package sutansums.generator;
 
 import java.util.Random;
-import sutansums.problem.Addition;
+import sutansums.problem.Substraction;
 
 
-public class AdditionGenerator implements IGenerator<Addition> {
-    private final int numberOfOperands;
+public class SubtractionGenerator implements IGenerator<Substraction> {
+    private final int numberOfOperands = 2;
     private final int numberOfDigits;
     private final boolean isExactNumberOfDigits;
-    private final boolean isWithCarry;
+    private final boolean isWithBorrow;
     private final Random random = new Random();
 
-    private AdditionGenerator(Builder builder) {
-        this.numberOfOperands = builder.numberOfOperands;
+    private SubtractionGenerator(Builder builder) {
         this.numberOfDigits = builder.numberOfDigits;
         this.isExactNumberOfDigits = builder.isExactNumberOfDigits;
-        this.isWithCarry = builder.isWithCarry;
+        this.isWithBorrow = builder.isWithBorrow;
     }
 
-    public Addition getNext() {
+    public Substraction getNext() {
         int digitTruncator = 1;
         for (int i = 1; i <= numberOfDigits; i++) {
             digitTruncator *= 10;
@@ -32,32 +31,35 @@ public class AdditionGenerator implements IGenerator<Addition> {
                 do {
                     number = Math.abs(random.nextInt()) % digitTruncator;
                 }
-                while ((isExactNumberOfDigits && number < digitTruncator / 10));
+                while (isExactNumberOfDigits && number < digitTruncator / 10);
                 operandList[j] = number;
             }
         }
         while (!isValid(operandList));
-        return new Addition(operandList);
+        return new Substraction(operandList);
     }
 
     private boolean isValid(Integer[] operandList) {
-        if (!isWithCarry) {
+        if (!isWithBorrow) {
             int div = 1;
             boolean allDigitsZero = false;
             while (!allDigitsZero) {
-                int sumOfDigits = 0;
                 allDigitsZero = true;
-                for (int operand : operandList) {
-                    int digit = (operand / div) % 10;
-                    sumOfDigits += digit;
 
-                    if ((operand / div) != 0) {
-                        allDigitsZero = false;
-                    }
+                Integer firstOperand = operandList[0];
+                int firstDigit = (firstOperand / div) % 10;
+
+                Integer secondOperand = operandList[1];
+                int secondDigit = (secondOperand / div) % 10;
+
+                if ((firstOperand / div) != 0 && (secondOperand / div) != 0) {
+                    allDigitsZero = false;
                 }
-                if (sumOfDigits > 9) {
+
+                if (firstDigit < secondDigit) {
                     return false;
                 }
+
                 div *= 10;
             }
         }
@@ -69,7 +71,7 @@ public class AdditionGenerator implements IGenerator<Addition> {
     }
 
     public char getSymbol() {
-        return '+';
+        return '-';
     }
 
     public int getNumberOfDigits() {
@@ -80,22 +82,15 @@ public class AdditionGenerator implements IGenerator<Addition> {
         return new Builder();
     }
 
-    public static class Builder {
-        private int numberOfOperands;
+    public static final class Builder {
         private int numberOfDigits;
         private boolean isExactNumberOfDigits = false;
-        private boolean isWithCarry = false;
+        private boolean isWithBorrow = false;
 
         private Builder() {
-
         }
 
-        public Builder withOperands(int numberOfOperands) {
-            this.numberOfOperands = numberOfOperands;
-            return this;
-        }
-
-        public Builder withDigits(int numberOfDigits) {
+        public Builder withNumberOfDigits(int numberOfDigits) {
             this.numberOfDigits = numberOfDigits;
             return this;
         }
@@ -110,18 +105,19 @@ public class AdditionGenerator implements IGenerator<Addition> {
             return this;
         }
 
-        public Builder withCarry() {
-            this.isWithCarry = true;
+        public Builder withBorrow() {
+            this.isWithBorrow = true;
             return this;
         }
 
-        public Builder withOutCarry() {
-            this.isWithCarry = false;
+        public Builder withOutBorrow() {
+            this.isWithBorrow = false;
             return this;
         }
 
-        public AdditionGenerator build() {
-            return new AdditionGenerator(this);
+        public SubtractionGenerator build() {
+            return new SubtractionGenerator(this);
         }
     }
+
 }
