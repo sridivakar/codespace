@@ -2,10 +2,10 @@ package samples.coursera.posa2.w4.pingpong;
 
 
 /**
- * Java program to create two threads, PingThread and PongThread, to alternately display “Ping” and “Pong” respectively on the console.
+ * Java program to create two threads, PingThread and PongThread, to alternately display Ping and Pong respectively on the console.
  * The program creates output that looks like this:
  * 
- * Ready… Set… Go!
+ * Ready Set Go!
  * Ping!
  * Pong!
  * Ping!
@@ -144,7 +144,7 @@ public class Program {
 		Thread pingThread = new Thread(new PingThread(numberOfTimes, gate, pingMutex, pongMutex));
 		Thread pongThread = new Thread(new PongThread(numberOfTimes, gate, pingMutex, pongMutex));
 
-		System.out.println("Ready… Set… Go!");
+		System.out.println("Ready Set Go!");
 		System.out.println();
 
 		//start ping & pong threads to Ping-Pong!! 
