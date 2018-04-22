@@ -11,22 +11,29 @@ public class Main {
     protected static final AdditionGenerator additionGenerator_2X1_ = AdditionGenerator.builder()
             .withOperands(2).withDigits(1).build();
     protected static final AdditionGenerator additionGenerator_3X1_ = AdditionGenerator.builder()
-            .withOperands(3).withDigits(1).build();
+            .withOperands(3).withDigits(1).withCarry().build();
     protected static final AdditionGenerator additionGenerator_3X2_ = AdditionGenerator.builder()
             .withOperands(3).withDigits(2).build();
-    protected static final AdditionGenerator additionGenerator_2X2_ = AdditionGenerator.builder()
-            .withOperands(2).withDigits(2).withSameNoOfDigits().build();
+    protected static final AdditionGenerator additionGenerator_2X2_withSameNoOfDigits = AdditionGenerator.builder()
+            .withOperands(2).withDigits(2).withCarry().withSameNoOfDigits().build();
+    protected static final AdditionGenerator additionGenerator_2X2_withDifferentNoOfDigits = AdditionGenerator.builder()
+            .withOperands(2).withDigits(2).withCarry().withDiffNoOfDigits().build();    
+    protected static final AdditionGenerator additionGenerator_3X3_withSameNoOfDigits = AdditionGenerator.builder()
+            .withOperands(3).withDigits(3).withCarry().withSameNoOfDigits().build();
+    
     protected static final AdditionGenerator additionGenerator_3X3_ = AdditionGenerator.builder()
-            .withOperands(3).withDigits(3).build();
+            .withOperands(3).withDigits(3).withCarry().build();
     protected static final AdditionGenerator additionGenerator_4X3_ = AdditionGenerator.builder()
-            .withOperands(4).withDigits(3).build();
+            .withOperands(4).withDigits(3).withCarry().build();
     protected static final AdditionGenerator additionGenerator_4X4_ = AdditionGenerator.builder()
-            .withOperands(4).withDigits(3).build();
+            .withOperands(4).withDigits(3).withCarry().build();
     protected static final AdditionGenerator additionGenerator_5X4_ = AdditionGenerator.builder()
-            .withOperands(5).withDigits(3).build();
+            .withOperands(5).withDigits(3).withCarry().build();
 
     protected static final SubtractionGenerator subtractionGenerator_1_ = SubtractionGenerator.builder()
-            .withNumberOfDigits(1).withDiffNoOfDigits().build();
+            .withNumberOfDigits(1).build();
+    protected static final SubtractionGenerator subtractionGenerator_2_withOutBorrow = SubtractionGenerator.builder()
+            .withNumberOfDigits(2).withDiffNoOfDigits().withOutBorrow().build();
     protected static final SubtractionGenerator subtractionGenerator_2_ = SubtractionGenerator.builder()
             .withNumberOfDigits(2).withDiffNoOfDigits().build();
     protected static final SubtractionGenerator subtractionGenerator_3_ = SubtractionGenerator.builder()
@@ -36,7 +43,7 @@ public class Main {
     protected static final SubtractionGenerator subtractionGenerator_5_ = SubtractionGenerator.builder()
             .withNumberOfDigits(5).withDiffNoOfDigits().build();
 
-    protected static final MultiplicationGenerator multiplicationGenerator_1 = MultiplicationGenerator.builder()
+    protected static final MultiplicationGenerator multiplicationGenerator_1_tablesLessthan5 = MultiplicationGenerator.builder()
             .withMultiplicandDigits(1).withMultiplierDigits(1).withDiffNoOfDigits().withTables(Arrays.asList(1,2,3,4,5)).build();
     protected static final MultiplicationGenerator multiplicationGenerator_2 = MultiplicationGenerator.builder()
             .withMultiplicandDigits(2).withMultiplierDigits(1).withDiffNoOfDigits().build();

@@ -4,7 +4,8 @@ import sutansums.writer.LongBookProblemPrinter;
 
 
 public class LongBookMain extends Main {
-    private static final LongBookProblemPrinter printer = new LongBookProblemPrinter();
+	private static final boolean isMarkDown = true;
+    private static final LongBookProblemPrinter printer = new LongBookProblemPrinter(isMarkDown);
 
     public static void main(String[] args) {
         all2X1Additions();
@@ -15,7 +16,6 @@ public class LongBookMain extends Main {
         allSubtractions();
         allAddition2x2_3X2();
         allAdd2X2Sub2();
-        allAddSubMul();
         allSubMulDiv();
         allInOne();
 
@@ -25,7 +25,7 @@ public class LongBookMain extends Main {
     private static void allAdd2X2Sub2() {
         for (int i = 0; i < 5; i++) {
             printer.writeHeader();
-            printer.writeBody(additionGenerator_2X2_, 15 /* problemAlongX */, 5 /* problemAlongY */);
+            printer.writeBody(additionGenerator_2X2_withSameNoOfDigits, 15 /* problemAlongX */, 5 /* problemAlongY */);
             printer.writeBody(subtractionGenerator_2_, 15 /* problemAlongX */, 4 /* problemAlongY */);
             printer.writeFooter();
         }
@@ -36,7 +36,7 @@ public class LongBookMain extends Main {
             printer.writeHeader();
             printer.writeBody(additionGenerator_2X1_, 8 /* problemAlongX */, 1 /* problemAlongY */);
             printer.writeBody(additionGenerator_3X1_, 8 /* problemAlongX */, 1 /* problemAlongY */);
-            printer.writeBody(additionGenerator_2X2_, 6 /* problemAlongX */, 1 /* problemAlongY */);
+            printer.writeBody(additionGenerator_2X2_withSameNoOfDigits, 6 /* problemAlongX */, 1 /* problemAlongY */);
             // printer.writeBody(subtractionGenerator_1_ , 5 /*problemAlongX*/, 2 /*problemAlongY*/);
             printer.writeFooter();
         }
@@ -91,23 +91,10 @@ public class LongBookMain extends Main {
     private static void all2X2and3X2AdditionsSubtractions() {
         for (int i = 0; i < 100; i++) {
             printer.writeHeader();
-            printer.writeBody(additionGenerator_2X2_, 12 /* problemAlongX */, 1 /* problemAlongY */);
+            printer.writeBody(additionGenerator_2X2_withSameNoOfDigits, 12 /* problemAlongX */, 1 /* problemAlongY */);
             printer.writeBody(additionGenerator_3X2_, 12 /* problemAlongX */, 2/* problemAlongY */);
             printer.writeBody(subtractionGenerator_1_, 12 /* problemAlongX */, 2 /* problemAlongY */);
             printer.writeUltraThinFooter();
-        }
-    }
-
-    private static void allAddSubMul() {
-        for (int i = 0; i < 5; i++) {
-            printer.write(additionGenerator_4X4_, 1/* pages */, 8/* problemAlongX */, 1/* problemAlongY */);
-            printer.write(additionGenerator_5X4_, 1/* pages */, 8/* problemAlongX */, 2/* problemAlongY */);
-
-            printer.write(subtractionGenerator_4_, 1/* pages */, 7/* problemAlongX */, 1/* problemAlongY */);
-            printer.write(subtractionGenerator_5_, 1/* pages */, 6/* problemAlongX */, 2/* problemAlongY */);
-
-            printer.write(multiplicationGenerator_1, 1/* pages */, 7/* problemAlongX */, 3/* problemAlongY */);
-
         }
     }
 
@@ -115,7 +102,7 @@ public class LongBookMain extends Main {
         for (int i = 0; i < 20; i++) {
             printer.writeHeader();
             printer.writeBody(subtractionGenerator_1_, 5/* problemAlongX */, 1/* problemAlongY */);
-            printer.writeBody(multiplicationGenerator_1, 6/* problemAlongX */, 1/* problemAlongY */);
+            printer.writeBody(multiplicationGenerator_1_tablesLessthan5, 6/* problemAlongX */, 1/* problemAlongY */);
             printer.writeHorizantalBody(divisionGenerator_2, 5/* problemAlongX */, 2/* problemAlongY */);
             printer.writeFooter();
         }

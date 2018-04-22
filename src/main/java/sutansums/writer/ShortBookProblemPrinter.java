@@ -1,5 +1,8 @@
 package sutansums.writer;
 
+import sutansums.printer.PdfPrinter;
+
+
 public class ShortBookProblemPrinter extends AbstractProblemPrinter {
 
     /**
@@ -14,8 +17,8 @@ public class ShortBookProblemPrinter extends AbstractProblemPrinter {
      */
     private static final int COLUMNS = 41;
 
-    public ShortBookProblemPrinter() {
-        super();
+    public ShortBookProblemPrinter(boolean isMarkDown) {
+        super(isMarkDown, PdfPrinter.shortPagePdfPrinter());
     }
 
     protected String[] getHeaderLines() {

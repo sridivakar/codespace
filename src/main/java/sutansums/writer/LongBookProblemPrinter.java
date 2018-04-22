@@ -1,5 +1,8 @@
 package sutansums.writer;
 
+import sutansums.printer.PdfPrinter;
+
+
 public class LongBookProblemPrinter extends AbstractProblemPrinter {
 
     /**
@@ -15,8 +18,8 @@ public class LongBookProblemPrinter extends AbstractProblemPrinter {
     private static final int COLUMNS = 46;
     private static final int ROWS = 42;
 
-    public LongBookProblemPrinter() {
-        super();
+    public LongBookProblemPrinter(boolean isMarkDown) {
+        super(isMarkDown, PdfPrinter.longPagePdfPrinter());
     }
 
     protected String[] getHeaderLines() {
