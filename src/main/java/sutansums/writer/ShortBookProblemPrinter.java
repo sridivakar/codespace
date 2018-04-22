@@ -26,8 +26,8 @@ public class ShortBookProblemPrinter extends AbstractProblemPrinter {
 
         int i = 0;
         /* ............1234567890123456789012345678901234567890123456789012345678901234567890 */
-        header[i++] = "Name :                  Date :           ";
-        header[i++] = "Start Time :        End Time :           ";
+        header[i++] = "Name :                    Date :         ";
+        header[i++] = "Start Time :          End Time :         ";
 
         return header;
     }

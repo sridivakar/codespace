@@ -1,9 +1,9 @@
 package sutansums.problem;
 
-public interface IProblem {
+public interface IProblem<T> {
 
 	char getSymbol();
 
-	Integer[] getOperands();
+	T[] getOperands();
 
 }

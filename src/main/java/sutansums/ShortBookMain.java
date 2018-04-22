@@ -38,15 +38,23 @@ public class ShortBookMain extends Main {
 			printer.writeHeader();
 			printer.writeBody(additionGenerator_3X1_, 10 /* problemAlongX */, 1 /* problemAlongY */);
 			printer.writeBody(additionGenerator_2X2_withSameNoOfDigits, 8 /* problemAlongX */, 1 /* problemAlongY */);
-			printer.writeBody(subtractionGenerator_1_, 10 /* problemAlongX */, 1 /* problemAlongY */);			
-			printer.writeBody(multiplicationGenerator_1_tablesLessthan5, 10 /* problemAlongX */, 1 /* problemAlongY */);			
+			printer.writeBody(subtractionGenerator_1_, 10 /* problemAlongX */, 1 /* problemAlongY */);
+			printer.writeBody(multiplicationGenerator_1_tablesLessthan5, 10 /* problemAlongX */, 1 /* problemAlongY */);
 			printer.writeThinFooter();
 
 			printer.writeHeader();
 			printer.writeBody(additionGenerator_2X2_withDifferentNoOfDigits, 8 /* problemAlongX */, 1 /* problemAlongY */);
-			printer.writeBody(additionGenerator_3X3_, 7 /* problemAlongX */, 1 /* problemAlongY */);			
-			printer.writeBody(subtractionGenerator_2_withOutBorrow, 8 /* problemAlongX */, 1 /* problemAlongY */);			
+			printer.writeBody(additionGenerator_3X3_, 7 /* problemAlongX */, 1 /* problemAlongY */);
+			printer.writeBody(subtractionGenerator_2_withOutBorrow, 8 /* problemAlongX */, 1 /* problemAlongY */);
 			printer.writeBody(multiplicationGenerator_1_tablesLessthan5, 10 /* problemAlongX */, 1 /* problemAlongY */);
+			printer.writeThinFooter();
+
+			printer.writeHeader();
+			printer.writeSingleLineProblems(numberNamesGenerator_lessThan100, 12, 0);
+			printer.writeThinFooter();
+
+			printer.writeHeader();
+			printer.writeSingleLineProblems(numberNumberalsGenerator_lessThan100, 12);
 			printer.writeThinFooter();
 		}
 	}

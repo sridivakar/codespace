@@ -6,124 +6,111 @@ import java.util.Random;
 import java.util.Set;
 import sutansums.problem.Multiplication;
 
+public class MultiplicationGenerator extends AbstractGenerator<Multiplication> {
+	private final boolean isExactNumberOfDigits;
+	private final List<Integer> tables;
+	private final Random random = new Random();
 
-public class MultiplicationGenerator implements IGenerator<Multiplication> {
-    private final int numberOfOperands = 2;
-    private final int multiplicandDigits;
-    private final int multiplierDigits;
-    private final boolean isExactNumberOfDigits;
-    private final List<Integer> tables;
-    private final Random random = new Random();
+	private final int multiplicandDigitTruncator;
+	private final int multiplierDigitTruncator;
 
-    private MultiplicationGenerator(Builder builder) {
-        this.multiplicandDigits = builder.multiplicandDigits;
-        this.multiplierDigits = builder.multiplierDigits;
-        this.isExactNumberOfDigits = builder.isExactNumberOfDigits;
-        this.tables = builder.tables;
-    }
+	private MultiplicationGenerator(Builder builder) {
+		super(2, builder.multiplicandDigits);
+		this.isExactNumberOfDigits = builder.isExactNumberOfDigits;
+		this.tables = builder.tables;
 
-    public Multiplication getNext() {
-        int multiplicandDigitTruncator = 1;
-        for (int i = 1; i <= multiplicandDigits; i++) {
-            multiplicandDigitTruncator *= 10;
-        }
+		int tmp = 1;
+		for (int i = 1; i <= builder.multiplicandDigits; i++) {
+			tmp *= 10;
+		}
+		this.multiplicandDigitTruncator = tmp;
 
-        int multiplierDigitTruncator = 1;
-        for (int i = 1; i <= multiplierDigits; i++) {
-            multiplierDigitTruncator *= 10;
-        }
+		tmp = 1;
+		for (int i = 1; i <= builder.multiplierDigits; i++) {
+			tmp *= 10;
+		}
+		this.multiplierDigitTruncator = tmp;
+	}
 
-        Integer[] operandList = new Integer[numberOfOperands];
-        int number = 0;
-        do {
-            number = Math.abs(random.nextInt()) % multiplicandDigitTruncator;
-        }
-        while (isExactNumberOfDigits && number < multiplicandDigitTruncator / 10);
-        operandList[0] = number;
+	public Multiplication getNext() {
 
-        do {
-            number = 0;
-            do {
-                number = Math.abs(random.nextInt()) % 11;
-            }
-            while (isExactNumberOfDigits && number < multiplierDigitTruncator / 10 && number == 0);
-            operandList[1] = number;
-        } while(!isValid(number));
-        
-        return new Multiplication(operandList);
-    }
+		Integer[] operandList = new Integer[numberOfOperands];
+		int number = 0;
+		do {
+			number = Math.abs(random.nextInt()) % multiplicandDigitTruncator;
+		} while (isExactNumberOfDigits && number < multiplicandDigitTruncator / 10);
+		operandList[0] = number;
 
-    private boolean isValid(Integer multiplier) {
-        if (tables != null && tables.size() > 0) {
-            Set<Integer> tableSet = new HashSet<>(tables);
+		do {
+			number = 0;
+			do {
+				number = Math.abs(random.nextInt()) % 11;
+			} while (isExactNumberOfDigits && number < multiplierDigitTruncator / 10 && number == 0);
+			operandList[1] = number;
+		} while (!isValid(number));
 
-            int div = 1;
-            while ((multiplier / div) > 0) {
-                int digit = (multiplier / div) % 10;
+		return new Multiplication(operandList);
+	}
 
-                if (!tableSet.contains(digit)) {
-                    return false;
-                }
-                div *= 10;
-            }
-        }
+	private boolean isValid(Integer multiplier) {
+		if (tables != null && tables.size() > 0) {
+			Set<Integer> tableSet = new HashSet<>(tables);
 
-        return true;
-    }
+			int div = 1;
+			while ((multiplier / div) > 0) {
+				int digit = (multiplier / div) % 10;
 
-    public int getNumberOfOperands() {
-        return this.numberOfOperands;
-    }
+				if (!tableSet.contains(digit)) {
+					return false;
+				}
+				div *= 10;
+			}
+		}
 
-    public char getSymbol() {
-        return 'X';
-    }
+		return true;
+	}
 
-    public int getNumberOfDigits() {
-        return this.multiplicandDigits;
-    }
+	public static Builder builder() {
+		return new Builder();
+	}
 
-    public static Builder builder() {
-        return new Builder();
-    }
+	public static final class Builder {
+		private int multiplicandDigits;
+		private int multiplierDigits;
+		private boolean isExactNumberOfDigits;
+		private List<Integer> tables;
 
-    public static final class Builder {
-        private int multiplicandDigits;
-        private int multiplierDigits;
-        private boolean isExactNumberOfDigits;
-        private List<Integer> tables;
+		private Builder() {
+		}
 
-        private Builder() {
-        }
+		public Builder withMultiplicandDigits(int multiplicandDigits) {
+			this.multiplicandDigits = multiplicandDigits;
+			return this;
+		}
 
-        public Builder withMultiplicandDigits(int multiplicandDigits) {
-            this.multiplicandDigits = multiplicandDigits;
-            return this;
-        }
+		public Builder withMultiplierDigits(int multiplierDigits) {
+			this.multiplierDigits = multiplierDigits;
+			return this;
+		}
 
-        public Builder withMultiplierDigits(int multiplierDigits) {
-            this.multiplierDigits = multiplierDigits;
-            return this;
-        }
+		public Builder withSameNoOfDigits() {
+			this.isExactNumberOfDigits = true;
+			return this;
+		}
 
-        public Builder withSameNoOfDigits() {
-            this.isExactNumberOfDigits = true;
-            return this;
-        }
+		public Builder withDiffNoOfDigits() {
+			this.isExactNumberOfDigits = false;
+			return this;
+		}
 
-        public Builder withDiffNoOfDigits() {
-            this.isExactNumberOfDigits = false;
-            return this;
-        }
+		public Builder withTables(List<Integer> tables) {
+			this.tables = tables;
+			return this;
+		}
 
-        public Builder withTables(List<Integer> tables) {
-            this.tables = tables;
-            return this;
-        }
-
-        public MultiplicationGenerator build() {
-            return new MultiplicationGenerator(this);
-        }
-    }
+		public MultiplicationGenerator build() {
+			return new MultiplicationGenerator(this);
+		}
+	}
 
 }

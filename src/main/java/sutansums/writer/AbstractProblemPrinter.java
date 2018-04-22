@@ -12,12 +12,14 @@ import java.util.Date;
 import java.util.List;
 
 import sutansums.generator.IGenerator;
+import sutansums.generator.NumberNamesGenerator;
+import sutansums.generator.NumberNumeralsGenerator;
 import sutansums.printer.PdfPrinter;
 import sutansums.problem.IProblem;
 
 public abstract class AbstractProblemPrinter {
 
-	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd_hh-mm-ss");
+	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
 	private static final String GAP_H = "  ";
 	private static final int GAP_V = 1;
 
@@ -46,7 +48,7 @@ public abstract class AbstractProblemPrinter {
 		this.pdfPrinter = pdfPrinter;
 		// TODO include timestamp in file name
 		Date now = new Date();
-		this.filename = dateFormat.format(now) + "_" + "worksheet";
+		this.filename = "target/" + dateFormat.format(now) + "_" + "worksheet";
 		String fExtn = ".txt";
 		String lprefix = "";
 		String lsuffix = "";
@@ -107,7 +109,7 @@ public abstract class AbstractProblemPrinter {
 				for (int j = 0; j < problemList.length; j++) {
 					// put either a space or symbol for every line
 					if (k == generator.getNumberOfOperands() - 1) {
-						builder.append(generator.getSymbol());
+						builder.append(problemList[j].getSymbol());
 					} else {
 						builder.append(" ");
 					}
@@ -131,11 +133,11 @@ public abstract class AbstractProblemPrinter {
 			// print lines for writing result
 
 			writer.println(resultLine);
-			writer.println("  " );
+			writer.println("  ");
 			writer.println(resultLine);
 			// print lines for vertical gap between problems
 			for (int k = 0; k < GAP_V; k++) {
-				writer.println("  " );
+				writer.println("  ");
 			}
 		}
 	}
@@ -178,7 +180,7 @@ public abstract class AbstractProblemPrinter {
 			for (int j = 0; j < problemList.length; j++) {
 				String number = String.valueOf(problemList[j].getOperands()[0]);
 				builder.append(number);
-				builder.append(generator.getSymbol());
+				builder.append(problemList[j].getSymbol());
 				builder.append(problemList[j].getOperands()[1]);
 
 				// append gap if not last problem in the row
@@ -191,8 +193,64 @@ public abstract class AbstractProblemPrinter {
 
 			// print lines for vertical gap between problems
 			for (int k = 0; k < H_GAP_V; k++) {
-				writer.println("  " );
+				writer.println("  ");
 			}
+		}
+	}
+
+	public void writeSingleLineProblems(NumberNamesGenerator generator, int problemAlongY, int extraResultLines) {
+		for (int i = 0; i < problemAlongY; i++) {
+			Integer next = generator.getNext().getOperands()[0];
+			String number = String.valueOf(next);
+			String seperator = ": ";
+
+			// format number to have leading spaces if number has less digits
+			char[] spaces = new char[generator.getNumberOfDigits() - number.length()];
+			Arrays.fill(spaces, ' ');
+			String paddedNumber = new String(spaces) + number;
+
+			// Prepare a dash line depending up on number of digits
+			char[] dashes = new char[getColumns() - (paddedNumber.length() % getColumns()) - seperator.length()];
+			Arrays.fill(dashes, '_');
+			String dashLine = new String(dashes);
+
+			char[] fullDashes = new char[getColumns()];
+			Arrays.fill(fullDashes, '_');
+			String fullDashLine = new String(fullDashes);
+
+			String question = paddedNumber + seperator + dashLine;
+			writer.println(question);
+
+			for (int j = 0; j < extraResultLines; j++) {
+				writer.println(fullDashLine);
+			}
+			writer.println("  ");
+		}
+
+		// print lines for vertical gap between problems
+		for (int k = 0; k < GAP_V; k++) {
+			writer.println("  ");
+		}
+	}
+
+	public void writeSingleLineProblems(NumberNumeralsGenerator generator, int problemAlongY) {
+		for (int i = 0; i < problemAlongY; i++) {
+			String numberName = generator.getNext().getOperands()[0];
+			String seperator = ": ";
+
+			// Prepare a dash line depending up on number of digits
+			char[] dashes = new char[20];
+			Arrays.fill(dashes, '_');
+			String dashLine = new String(dashes);
+
+			String question = numberName + seperator + dashLine;
+			writer.println(question);
+			writer.println("  ");
+		}
+
+		// print lines for vertical gap between problems
+		for (int k = 0; k < GAP_V; k++) {
+			writer.println("  ");
 		}
 	}
 
