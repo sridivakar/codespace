@@ -15,7 +15,7 @@ public class Multiplication implements IProblem<Integer> {
 	}
 
 	public char getSymbol() {
-		return 'X';
+		return 'x';
 	}
 
 }
