@@ -1,81 +1,160 @@
 package sutansums;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-import sutansums.generator.AdditionGenerator;
-import sutansums.generator.DivisionGenerator;
-import sutansums.generator.MultiplicationGenerator;
-import sutansums.generator.NumberNamesGenerator;
-import sutansums.generator.NumberNumeralsGenerator;
-import sutansums.generator.SubtractionGenerator;
+import sutansums.printer.PdfPrinter;
+import sutansums.problem.arithmetic.add.AdditionProblems;
+import sutansums.problem.arithmetic.common.ArithmeticProblem;
+import sutansums.problem.arithmetic.mul.MultiplicationProblems;
+import sutansums.problem.arithmetic.sub.SubtractionProblems;
+import sutansums.problem.conversion.common.ConversionProblem;
+import sutansums.problem.conversion.common.NullUnit;
+import sutansums.problem.conversion.numbernames.NumberNameProblems;
+import sutansums.worksheet.WorkSheets;
 
 public class Main {
-	protected static final AdditionGenerator additionGenerator_2X1_ = AdditionGenerator.builder().withOperands(2)
-			.withDigits(1).build();
-	protected static final AdditionGenerator additionGenerator_3X1_ = AdditionGenerator.builder().withOperands(3)
-			.withDigits(1).withCarry().build();
-	protected static final AdditionGenerator additionGenerator_3X2_ = AdditionGenerator.builder().withOperands(3)
-			.withDigits(2).build();
-	protected static final AdditionGenerator additionGenerator_2X2_withSameNoOfDigits = AdditionGenerator.builder()
-			.withOperands(2).withDigits(2).withCarry().withSameNoOfDigits().build();
-	protected static final AdditionGenerator additionGenerator_2X2_withDifferentNoOfDigits = AdditionGenerator
-			.builder().withOperands(2).withDigits(2).withCarry().withDiffNoOfDigits().build();
-	protected static final AdditionGenerator additionGenerator_3X3_withSameNoOfDigits = AdditionGenerator.builder()
-			.withOperands(3).withDigits(3).withCarry().withSameNoOfDigits().build();
 
-	protected static final AdditionGenerator additionGenerator_3X3_ = AdditionGenerator.builder().withOperands(3)
-			.withDigits(3).withCarry().build();
-	protected static final AdditionGenerator additionGenerator_4X3_ = AdditionGenerator.builder().withOperands(4)
-			.withDigits(3).withCarry().build();
-	protected static final AdditionGenerator additionGenerator_4X4_ = AdditionGenerator.builder().withOperands(4)
-			.withDigits(3).withCarry().build();
-	protected static final AdditionGenerator additionGenerator_5X4_ = AdditionGenerator.builder().withOperands(5)
-			.withDigits(3).withCarry().build();
+	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
 
-	protected static final SubtractionGenerator subtractionGenerator_1_ = SubtractionGenerator.builder()
-			.withNumberOfDigits(1).build();
-	protected static final SubtractionGenerator subtractionGenerator_2_withOutBorrow = SubtractionGenerator.builder()
-			.withNumberOfDigits(2).withDiffNoOfDigits().withOutBorrow().build();
-	protected static final SubtractionGenerator subtractionGenerator_2_ = SubtractionGenerator.builder()
-			.withNumberOfDigits(2).withDiffNoOfDigits().build();
-	protected static final SubtractionGenerator subtractionGenerator_3_ = SubtractionGenerator.builder()
-			.withNumberOfDigits(3).withDiffNoOfDigits().build();
-	protected static final SubtractionGenerator subtractionGenerator_4_ = SubtractionGenerator.builder()
-			.withNumberOfDigits(4).withDiffNoOfDigits().build();
-	protected static final SubtractionGenerator subtractionGenerator_5_ = SubtractionGenerator.builder()
-			.withNumberOfDigits(5).withDiffNoOfDigits().build();
+	public static void main(String[] args) {
+		int noOfPages = 100;
+		boolean isBottomAligned = true;
 
-	protected static final MultiplicationGenerator multiplicationGenerator_1_tablesLessthan5 = MultiplicationGenerator
-			.builder().withMultiplicandDigits(1).withMultiplierDigits(1).withDiffNoOfDigits()
-			.withTables(Arrays.asList(1, 2, 3, 4, 5)).build();
-	protected static final MultiplicationGenerator multiplicationGenerator_2 = MultiplicationGenerator.builder()
-			.withMultiplicandDigits(2).withMultiplierDigits(1).withDiffNoOfDigits().build();
-	protected static final MultiplicationGenerator multiplicationGenerator_3 = MultiplicationGenerator.builder()
-			.withMultiplicandDigits(3).withMultiplierDigits(1).withDiffNoOfDigits().build();
+		Date now = new Date();
+		String filename = "target/" + dateFormat.format(now) + "_" + "worksheet";
+		String txtFileExtn = ".txt";
+		String pdfFileExtn = ".pdf";
 
-	protected static final DivisionGenerator divisionGenerator_2 = DivisionGenerator.builder().withDividendDigits(2)
-			.withDivisorDigits(1).withDiffNoOfDigits().build();
-	protected static final DivisionGenerator divisionGenerator_3 = DivisionGenerator.builder().withDividendDigits(3)
-			.withDivisorDigits(1).withDiffNoOfDigits().build();
-	protected static final DivisionGenerator divisionGenerator_4 = DivisionGenerator.builder().withDividendDigits(4)
-			.withDivisorDigits(1).withSameNoOfDigits().build();
+		try (PrintWriter writer = new PrintWriter(new FileWriter(new File(filename + txtFileExtn)))) {
+			for (int i = 0; i < noOfPages; i++) {
+				List<String> row1 = WorkSheets.concatWithBottomAligned(
+						AdditionProblems.long_1x2.next(),
+						AdditionProblems.long_1x2.next(),
+						AdditionProblems.long_2x2.next(),
+						AdditionProblems.long_2x2.next(),
+						AdditionProblems.long_2x2.next(),
+						AdditionProblems.long_3x2.next(),
+						AdditionProblems.long_3x2.next(),
+						AdditionProblems.long_3x2.next());
 
-	protected static final NumberNamesGenerator numberNamesGenerator_lessThan100 = NumberNamesGenerator.builder()
-			.withDigits(2).build();
+				List<String> row2 = WorkSheets.concatWithBottomAligned(
+						AdditionProblems.long_1x3.next(),
+						AdditionProblems.long_1x3.next(),
+						AdditionProblems.long_2x3.next(),
+						AdditionProblems.long_2x3.next(),
+						AdditionProblems.long_2x3.next(),
+						AdditionProblems.long_3x3.next(),
+						AdditionProblems.long_3x3.next(),
+						AdditionProblems.long_3x3.next());
 
-	protected static final NumberNamesGenerator numberNamesGenerator_lessThan1000 = NumberNamesGenerator.builder()
-			.withDigits(3).build();
+				List<String> row3 = WorkSheets.concatWithBottomAligned(
+						SubtractionProblems.long_1x2.next(),
+						SubtractionProblems.long_1x2.next(),
+						SubtractionProblems.long_1x2.next(),
+						SubtractionProblems.long_1x2.next(),
+						SubtractionProblems.long_2x2_withOutBorrow.next(),
+						SubtractionProblems.long_2x2_withOutBorrow.next(),
+						SubtractionProblems.long_2x2_withOutBorrow.next(),
+						SubtractionProblems.long_2x2_withOutBorrow.next(),
+						SubtractionProblems.long_2x2_withOutBorrow.next());
 
-	protected static final NumberNamesGenerator numberNamesGenerator_lessThan10000 = NumberNamesGenerator.builder()
-			.withDigits(4).build();
-	
-	protected static final NumberNumeralsGenerator numberNumberalsGenerator_lessThan100 = NumberNumeralsGenerator.builder()
-			.withDigits(2).build();
+				List<String> row4 = WorkSheets.concatWithBottomAligned(
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next(),
+						MultiplicationProblems.long_1x2.next());
 
-	protected static final NumberNumeralsGenerator numberNumberalsGenerator_lessThan1000 = NumberNumeralsGenerator.builder()
-			.withDigits(3).build();
-	
-	protected static final NumberNumeralsGenerator numberNumberalsGenerator_lessThan10000 = NumberNumeralsGenerator.builder()
-			.withDigits(4).build();
+				WorkSheets.getHeader(WorkSheets.A5_COLUMNS, WorkSheets.A5_HEADER_LINES).stream()
+						.forEach(s -> writer.println(s));
+				writer.println();
+				row1.stream().forEach(s -> writer.println(s));
+				writer.println();
+				row2.stream().forEach(s -> writer.println(s));
+				writer.println();
+				row3.stream().forEach(s -> writer.println(s));
+				writer.println();
+				row4.stream().forEach(s -> writer.println(s));
+				writer.println();
+				WorkSheets.getFooter(WorkSheets.A5_COLUMNS, WorkSheets.A5_FOOTER_LINES).stream()
+						.forEach(s -> writer.println(s));
 
+				List<String> convRow1 = WorkSheets.getOneLiners(WorkSheets.A5_COLUMNS,
+						NumberNameProblems.name_2.next(),
+						NumberNameProblems.name_2.next(),
+						NumberNameProblems.name_2.next(),
+						NumberNameProblems.name_3.next(),
+						NumberNameProblems.name_3.next(),
+						NumberNameProblems.name_3.next(),
+
+						NumberNameProblems.long_2.next(),
+						NumberNameProblems.long_2.next(),
+						NumberNameProblems.long_2.next(),
+						NumberNameProblems.long_3.next(),
+						NumberNameProblems.long_3.next(),
+						NumberNameProblems.long_3.next()
+				);
+
+				WorkSheets.getHeader(WorkSheets.A5_COLUMNS, WorkSheets.A5_HEADER_LINES).stream()
+						.forEach(s -> writer.println(s));
+
+				WorkSheets.getCenteredSubHeading(WorkSheets.A5_COLUMNS, "Number Names").stream()
+						.forEach(s -> writer.println(s));
+				writer.println();
+				convRow1.stream().forEach(s -> { writer.println(s); writer.println();});
+				writer.println();
+				WorkSheets.getFooter(WorkSheets.A5_COLUMNS, WorkSheets.A5_FOOTER_LINES).stream()
+						.forEach(s -> writer.println(s));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		PdfPrinter pdfPrinter = PdfPrinter.a5PdfPrinter();
+		pdfPrinter.print(filename + txtFileExtn, filename + pdfFileExtn);
+	}
+
+	private static void dep() {
+
+		int MAX = 10;
+		Stream<ArithmeticProblem<Long>> long_1x2_add_stream = getStream(AdditionProblems.long_3x2);
+		Stream<ArithmeticProblem<Long>> long_1x2_sub_stream = getStream(SubtractionProblems.long_1x2);
+		Stream<ArithmeticProblem<Long>> long_1x2_mul_stream = getStream(MultiplicationProblems.long_1x2);
+
+		Stream<ArithmeticProblem<Long>> combinedStream = long_1x2_add_stream; // Stream.concat(long_1x2_add_stream.limit(MAX),
+																				// long_1x2_mul_stream.limit(100));
+		Random random = new Random();
+		Comparator<? super ArithmeticProblem<Long>> randomizer = (t1, t2) -> Integer.compare(random.nextInt(),
+				random.nextInt());
+		// combinedStream.sorted(randomizer).limit(10).map(p ->
+		// p.getHorizantalString()).collect(Collectors.toList()).forEach(p ->
+		// System.out.println(p));
+		combinedStream.limit(10).map(p -> p.getVerticalString()).collect(Collectors.toList())
+				.forEach(p -> System.out.println(p));
+
+		Stream<ConversionProblem<Long, NullUnit>> numberNames_stream = getStream(NumberNameProblems.long_4);
+		numberNames_stream.limit(10).map(p -> p.getHorizantalString()).collect(Collectors.toList())
+				.forEach(p -> System.out.println(p));
+	}
+
+	private static <T> Stream<T> getStream(Iterator<T> iterator) {
+		Iterable<T> iterable = () -> iterator;
+		return StreamSupport.stream(iterable.spliterator(), false);
+	}
 }

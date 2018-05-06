@@ -1,9 +1,11 @@
 package sutansums.problem;
 
-public interface IProblem<T> {
+import java.util.List;
 
-	char getSymbol();
+public interface IProblem {
 
-	T[] getOperands();
+	String getHorizantalString();
+
+	List<String> getVerticalString();
 
 }
