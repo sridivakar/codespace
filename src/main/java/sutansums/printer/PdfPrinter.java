@@ -100,7 +100,7 @@ public class PdfPrinter {
 	}
 
 	static class HeaderFooterPageEvent extends PdfPageEventHelper {
-	    Font ffont = new Font(Font.FontFamily.UNDEFINED, 5, Font.ITALIC);
+	    Font ffont = new Font(Font.FontFamily.UNDEFINED, 8, Font.ITALIC);
 	    
 	    public void onEndPage(PdfWriter writer, Document document) {
 	        PdfContentByte cb = writer.getDirectContent();
@@ -118,7 +118,7 @@ public class PdfPrinter {
 	}
 	static class WatermarkPageEvent extends PdfPageEventHelper {
 
-		Font FONT = new Font(Font.FontFamily.COURIER, 24, Font.BOLD, new GrayColor(0.85f));
+		Font FONT = new Font(Font.FontFamily.COURIER, 24, Font.BOLD, new GrayColor(0.90f));
 
 		@Override
 		public void onEndPage(PdfWriter writer, Document document) {

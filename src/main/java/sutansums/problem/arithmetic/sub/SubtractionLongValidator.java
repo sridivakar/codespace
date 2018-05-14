@@ -12,6 +12,9 @@ public class SubtractionLongValidator implements IValidator<Long> {
 	}
 
 	public boolean isValid(List<Long> operandList) {
+		if (operandList.get(0) < operandList.get(1)) {
+			return false;
+		}
 		if (!isWithBorrow) {
 			int div = 1;
 			boolean allDigitsZero = false;
