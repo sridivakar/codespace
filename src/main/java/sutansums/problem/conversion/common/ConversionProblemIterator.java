@@ -12,12 +12,12 @@ public class ConversionProblemIterator<T extends Comparable<? super T>, U extend
 	private final IGenerator<NumberUnit<T, U>> rand;
 	private final List<U> toUnits;
 
-	public ConversionProblemIterator(IGenerator<NumberUnit<T, U>> generator, List<U> toUnits) {
+	public ConversionProblemIterator(List<U> toUnits, IGenerator<NumberUnit<T, U>> generator) {
 		this.rand = generator;
 		this.toUnits = toUnits;
 	}
 
-	public ConversionProblemIterator(IGenerator<NumberUnit<T, U>> generator, U toUnit) {
+	public ConversionProblemIterator(U toUnit, IGenerator<NumberUnit<T, U>> generator) {
 		this.rand = generator;
 		this.toUnits = Arrays.asList(toUnit);
 	}

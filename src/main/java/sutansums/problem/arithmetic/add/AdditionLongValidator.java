@@ -17,7 +17,6 @@ public class AdditionLongValidator implements IValidator<Long> {
 		}
 
 		return applyNoCarryRule(operandList);
-
 	}
 
 	private boolean applyNoCarryRule(List<Long> operandList) {

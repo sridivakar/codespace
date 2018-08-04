@@ -31,6 +31,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class PdfPrinter {
 
 	private static final int HALF_INCH = 36;
+	public static String NEW_PAGE = "***********************************************"; 
 
 	private final Rectangle pageSize;
 	private final float marginLeft;
@@ -87,6 +88,41 @@ public class PdfPrinter {
 		String line = input.readLine();
 		Paragraph paragraph = new Paragraph();
 		paragraph.setFont(font);
+		while (line != null) {		
+			if(NEW_PAGE.equals(line)) {
+				document.add(paragraph);
+				document.newPage();
+				paragraph = new Paragraph();
+				paragraph.setFont(font);
+			} else {
+				paragraph.add(new Chunk(line));
+				paragraph.add(Chunk.NEWLINE);
+				// document.newPage();
+				// document.add(new Paragraph("Testing.", font));
+				// document.newPage();
+			}
+			line = input.readLine();
+		}
+		document.add(paragraph);
+		document.close();
+	}
+	
+	private void print2(BufferedReader input, String outputPdfFileName)
+			throws DocumentException, FileNotFoundException, IOException {
+		Document document = new Document(pageSize, marginLeft, marginRight, marginTop, marginBottom);
+
+		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(outputPdfFileName));
+		writer.setPageEvent(new HeaderFooterPageEvent());
+		// watermark
+		writer.setPageEvent(new WatermarkPageEvent());
+
+		// write to document
+		document.open();
+
+		
+		String line = input.readLine();
+		Paragraph paragraph = new Paragraph();
+		paragraph.setFont(font);
 		while (line != null) {
 			paragraph.add(new Chunk(line));
 			paragraph.add(Chunk.NEWLINE);
@@ -100,7 +136,7 @@ public class PdfPrinter {
 	}
 
 	static class HeaderFooterPageEvent extends PdfPageEventHelper {
-	    Font ffont = new Font(Font.FontFamily.UNDEFINED, 8, Font.ITALIC);
+	    Font ffont = new Font(Font.FontFamily.UNDEFINED, 9, Font.ITALIC);
 	    
 	    public void onEndPage(PdfWriter writer, Document document) {
 	        PdfContentByte cb = writer.getDirectContent();
@@ -118,7 +154,7 @@ public class PdfPrinter {
 	}
 	static class WatermarkPageEvent extends PdfPageEventHelper {
 
-		Font FONT = new Font(Font.FontFamily.COURIER, 24, Font.BOLD, new GrayColor(0.90f));
+		Font FONT = new Font(Font.FontFamily.COURIER, 24, Font.BOLD, new GrayColor(0.92f));
 
 		@Override
 		public void onEndPage(PdfWriter writer, Document document) {

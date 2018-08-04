@@ -2,23 +2,23 @@ package sutansums.problem.arithmetic.common;
 
 public enum ArithmeticSymbol {
 
-	ADD('+'),
+	ADD("+"),
 
-	SUB('-'),
+	SUB("-"),
 
-	MUL('x'),
+	MUL("x"),
 
-	DIV(')'),
+	DIV(")"),
 
 	;
 
-	private final char symbol;
+	private final String symbol;
 
-	ArithmeticSymbol(char symbol) {
+	ArithmeticSymbol(String symbol) {
 		this.symbol = symbol;
 	}
 
-	public char getSymbol() {
+	public String getSymbol() {
 		return symbol;
 	}
 

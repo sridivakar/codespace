@@ -2,7 +2,9 @@ package sutansums.worksheet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import sutansums.problem.IProblem;
 import sutansums.problem.arithmetic.common.ArithmeticProblem;
@@ -70,21 +72,24 @@ public class WorkSheets {
 	public static List<String> getCenteredSubHeading(int columns, String headerLine) {
 		char[] spaces = new char[(columns - headerLine.length()) / 2];
 		Arrays.fill(spaces, ' ');
-
-		char[] underscore = new char[headerLine.length()];
-		Arrays.fill(underscore, '_');
-
 		String subHeading = String.valueOf(spaces) + headerLine + String.valueOf(spaces);
-		String underLine = String.valueOf(spaces) + String.valueOf(underscore) + String.valueOf(spaces);
 
-		return Arrays.asList(subHeading, underLine);
+		return Arrays.asList(subHeading);
+
+		// char[] underscore = new char[headerLine.length()];
+		// Arrays.fill(underscore, '_');
+		// String underLine = String.valueOf(spaces) + String.valueOf(underscore) +
+		// String.valueOf(spaces);
+
+		// return Arrays.asList(subHeading, underLine);
 	}
 
 	public static List<String> getOneLiners(int columns, IProblem... problems) {
 		List<String> result = new ArrayList<>(problems.length);
 
-		for (int i = 1; i < problems.length; i++) {
-			char[] blank = new char[columns - problems[i].getHorizantalString().length()];
+		int width = columns - 5;
+		for (int i = 0; i < problems.length; i++) {
+			char[] blank = new char[width - (problems[i].getHorizantalString().length() % width)];
 			Arrays.fill(blank, '_');
 			String blankLine = String.valueOf(blank);
 			result.add(problems[i].getHorizantalString() + blankLine);
@@ -154,40 +159,46 @@ public class WorkSheets {
 		return footer;
 	}
 
-	public static List<String> concatWithBottomAligned(ArithmeticProblem<Long>... problems) {
-		List<String> result = new ArrayList<>(problems[0].getVerticalString());
+	@SafeVarargs
+	@SuppressWarnings("varargs")
+	public static <T extends Comparable<? super T>> List<String> concatWithBottomAligned(
+			ArithmeticProblem<T>... problems) {
+		List<String> result = Collections.emptyList();
 
-		for (int i = 1; i < problems.length; i++) {
-			List<String> problem = problems[i].getVerticalString();
-			result = concatProblems(true /* isBottomAligned */, result, problem);
+		for (ArithmeticProblem<T> problem : problems) {
+			List<String> problemString = problem.getVerticalString();
+			result = concatProblems(Alignment.BOTTOM, result, problemString);
 		}
 		return result;
 	}
 
-	public static List<String> concatProblems(boolean isBottomAligned, List<String>... problems) {
-		List<String> result = new ArrayList<>(problems[0]);
+	@SafeVarargs
+	@SuppressWarnings("varargs")
+	public static List<String> concatProblems(Alignment alignment, List<String>... problems) {
+		List<String> result = Collections.emptyList();
 
-		for (int i = 1; i < problems.length; i++) {
-			List<String> problem = problems[i];
-			result = concatProblems(isBottomAligned, result, problem);
+		for (List<String> problem : problems) {
+			result = concatProblems(alignment, result, problem);
 		}
 		return result;
 	}
 
-	public static List<String> concatProblems(boolean isBottomAligned, List<String> problemOne,
-			List<String> problemTwo) {
+	public static List<String> concatProblems(Alignment alignment, List<String> problemOne, List<String> problemTwo) {
+		if (Objects.isNull(problemOne) || problemOne.size() == 0) {
+			return problemTwo;
+		}
 		int problemOneHeight = problemOne.size();
 		int problemTwoHeight = problemTwo.size();
 
 		List<String> result = new ArrayList<>();
 		if (problemOneHeight < problemTwoHeight) {
-			List<String> alignedProblemOne = alignProblem(isBottomAligned, problemTwoHeight, problemOne);
+			List<String> alignedProblemOne = adjustHeight(alignment, problemTwoHeight, problemOne);
 
 			for (int i = 0; i < problemTwoHeight; i++) {
 				result.add(alignedProblemOne.get(i) + GAP_H + problemTwo.get(i));
 			}
 		} else {
-			List<String> alignedProblemTwo = alignProblem(isBottomAligned, problemOneHeight, problemTwo);
+			List<String> alignedProblemTwo = adjustHeight(alignment, problemOneHeight, problemTwo);
 
 			for (int i = 0; i < problemOneHeight; i++) {
 				result.add(problemOne.get(i) + GAP_H + alignedProblemTwo.get(i));
@@ -198,7 +209,7 @@ public class WorkSheets {
 
 	}
 
-	private static List<String> alignProblem(boolean isBottomAligned, int targetHeight, List<String> problem) {
+	private static List<String> adjustHeight(Alignment alignment, int targetHeight, List<String> problem) {
 		int problemHeight = problem.size();
 		Integer problemWidth = problem
 				.stream()
@@ -210,7 +221,7 @@ public class WorkSheets {
 		Arrays.fill(problemSpaces, ' ');
 		List<String> alignedProblemOne = new ArrayList<>();
 
-		if (isBottomAligned) {
+		if (alignment == Alignment.BOTTOM) {
 			for (int i = 0; i < targetHeight - problemHeight; i++) {
 				alignedProblemOne.add(String.valueOf(problemSpaces));
 			}
@@ -218,7 +229,7 @@ public class WorkSheets {
 
 		alignedProblemOne.addAll(problem);
 
-		if (!isBottomAligned) {
+		if (alignment == Alignment.TOP) {
 			for (int i = 0; i < targetHeight - problemHeight; i++) {
 				alignedProblemOne.add(String.valueOf(problemSpaces));
 			}

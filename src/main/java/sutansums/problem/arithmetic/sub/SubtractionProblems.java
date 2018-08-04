@@ -27,6 +27,15 @@ public final class SubtractionProblems {
 	public static ArithmeticProblemIterator<Long> long_2x2_withOutBorrow = new ArithmeticProblemIterator<>(
 			SUB,
 			long_2x2_generator_withOutBorrow);
+	
+	private static LongOperandsGenerator long_2x2_generator_withBorrow = LongOperandsGenerator.builder()
+			.withNumberOfDigits(2)
+			.withNumberOfOperands(2)
+			.withValidator(new SubtractionLongValidator(true /* isWithBorrow */))
+			.build();
+	public static ArithmeticProblemIterator<Long> long_2x2_withBorrow = new ArithmeticProblemIterator<>(
+			SUB,
+			long_2x2_generator_withBorrow);
 
 	private static LongOperandsGenerator long_2x2_generator = LongOperandsGenerator.builder()
 			.withNumberOfDigits(2)

@@ -26,6 +26,14 @@ public final class AdditionProblems {
 			ADD,
 			long_1x3_generator);
 	
+	private static LongOperandsGenerator long_1x4_generator = LongOperandsGenerator.builder()
+			.withNumberOfDigits(1)
+			.withNumberOfOperands(4)
+			.build();
+	public static ArithmeticProblemIterator<Long> long_1x4 = new ArithmeticProblemIterator<>(
+			ADD,
+			long_1x4_generator);
+	
 	private static LongOperandsGenerator long_2x2_generator_withOutCarry = LongOperandsGenerator.builder()
 			.withNumberOfDigits(2)
 			.withNumberOfOperands(2)
@@ -50,6 +58,14 @@ public final class AdditionProblems {
 	public static ArithmeticProblemIterator<Long> long_2x3 = new ArithmeticProblemIterator<>(
 			ADD,
 			long_2x3_generator);
+
+	private static LongOperandsGenerator long_2x4_generator = LongOperandsGenerator.builder()
+			.withNumberOfDigits(2)
+			.withNumberOfOperands(4)
+			.build();
+	public static ArithmeticProblemIterator<Long> long_2x4 = new ArithmeticProblemIterator<>(
+			ADD,
+			long_2x4_generator);
 	
 	private static LongOperandsGenerator long_3x2_generator = LongOperandsGenerator.builder()
 			.withNumberOfDigits(3)
@@ -67,4 +83,11 @@ public final class AdditionProblems {
 			ADD,
 			long_3x3_generator);
 
+	private static LongOperandsGenerator long_3x4_generator = LongOperandsGenerator.builder()
+			.withNumberOfDigits(3)
+			.withNumberOfOperands(4)
+			.build();
+	public static ArithmeticProblemIterator<Long> long_3x4 = new ArithmeticProblemIterator<>(
+			ADD,
+			long_3x4_generator);
 }

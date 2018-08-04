@@ -8,14 +8,15 @@ import sutansums.problem.conversion.common.NullUnit;
 import sutansums.problem.generator.AbstractTransformer;
 import sutansums.problem.generator.IGenerator;
 
-public class NumberNameTransformer extends AbstractTransformer<Long, NumberUnit<Long, NullUnit>> {
+public class IdentityTransformer<T extends Comparable<? super T>>
+		extends AbstractTransformer<T, NumberUnit<T, NullUnit>> {
 
-	public NumberNameTransformer(IGenerator<Long> generator) {
+	public IdentityTransformer(IGenerator<T> generator) {
 		super(generator);
 	}
 
 	@Override
-	public List<NumberUnit<Long, NullUnit>> transform(List<Long> sourceList) {
+	public List<NumberUnit<T, NullUnit>> transform(List<T> sourceList) {
 		return sourceList.stream()
 				.map(s -> new NumberUnit<>(s, NullUnit.EMPTY))
 				.collect(Collectors.toList());
