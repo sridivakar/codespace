@@ -52,25 +52,22 @@ public class Grade2Vol2 {
 				List<String> row3 = WorkSheets.concatWithBottomAligned(
 						SubtractionProblems.long_1x2.next(),
 						SubtractionProblems.long_1x2.next(),
-						SubtractionProblems.long_1x2.next(),
-						SubtractionProblems.long_2x2_withBorrow.next(),
-						SubtractionProblems.long_2x2_withBorrow.next(),
-						SubtractionProblems.long_2x2_withBorrow.next(),
-						SubtractionProblems.long_2x2_withBorrow.next(),
-						SubtractionProblems.long_2x2_withBorrow.next(),
-						SubtractionProblems.long_2x2_withBorrow.next());
+						SubtractionProblems.long_2x2.next(),
+						SubtractionProblems.long_2x2.next(),
+						SubtractionProblems.long_2x2.next(),
+						SubtractionProblems.long_3x2.next(),
+						SubtractionProblems.long_3x2.next(),
+						SubtractionProblems.long_4x2.next());
 				
 				List<String> row4 = WorkSheets.concatWithBottomAligned(
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next());
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_2x1.next(),
+						MultiplicationProblems.long_2x1.next(),
+						MultiplicationProblems.long_2x1.next(),
+						MultiplicationProblems.long_3x1.next(),
+						MultiplicationProblems.long_3x1.next(),
+						MultiplicationProblems.long_4x1.next());
 
 				WorkSheets.getThinHeader(WorkSheets.A5_COLUMNS, WorkSheets.A5_HEADER_LINES)
 						.stream()

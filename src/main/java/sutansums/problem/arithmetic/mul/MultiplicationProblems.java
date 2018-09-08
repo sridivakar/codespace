@@ -12,53 +12,54 @@ public final class MultiplicationProblems {
 	private MultiplicationProblems() {
 	}
 
-	private static MultiplicationLongValidator validator = new MultiplicationLongValidator(Arrays.asList(1, 2, 3, 4, 5));
+	private static MultiplicationLongValidator validator = new MultiplicationLongValidator(
+			Arrays.asList(1, 2, 3, 4, 5, 6, 7));
 
-	private static LongOperandsGenerator long_1x2_generator = LongOperandsGenerator.builder()
+	private static LongOperandsGenerator long_1x1_generator = LongOperandsGenerator.builder()
 			.withNumberOfOperands(2)
 			.withMultiplicandDigits(1)
 			.withMultiplierDigits(1)
 			.withValidator(validator)
 			.build();
-	public static ArithmeticProblemIterator<Long> long_1x2 = new ArithmeticProblemIterator<>(
+	public static ArithmeticProblemIterator<Long> long_1x1 = new ArithmeticProblemIterator<>(
 			MUL,
-			long_1x2_generator);
+			long_1x1_generator);
 
-	private static LongOperandsGenerator long_2x2_generator_withOutCarry = LongOperandsGenerator.builder()
+	private static LongOperandsGenerator long_2x1_generator = LongOperandsGenerator.builder()
 			.withNumberOfOperands(2)
 			.withMultiplicandDigits(2)
 			.withMultiplierDigits(1)
 			.withValidator(validator)
 			.build();
-	public static ArithmeticProblemIterator<Long> long_2x2_withOutCarry = new ArithmeticProblemIterator<>(
+	public static ArithmeticProblemIterator<Long> long_2x1 = new ArithmeticProblemIterator<>(
 			MUL,
-			long_2x2_generator_withOutCarry);
+			long_2x1_generator);
 
-	private static LongOperandsGenerator long_2x2_generator = LongOperandsGenerator.builder()
+	private static LongOperandsGenerator long_3x1_generator = LongOperandsGenerator.builder()
 			.withNumberOfOperands(2)
 			.withMultiplicandDigits(3)
 			.withMultiplierDigits(1)
 			.build();
-	public static ArithmeticProblemIterator<Long> long_2x2 = new ArithmeticProblemIterator<>(
+	public static ArithmeticProblemIterator<Long> long_3x1 = new ArithmeticProblemIterator<>(
 			MUL,
-			long_2x2_generator);
+			long_3x1_generator);
 
-	private static LongOperandsGenerator long_3x2_generator = LongOperandsGenerator.builder()
+	private static LongOperandsGenerator long_4x1_generator = LongOperandsGenerator.builder()
 			.withNumberOfOperands(2)
 			.withMultiplierDigits(1)
 			.withMultiplicandDigits(4)
 			.build();
-	public static ArithmeticProblemIterator<Long> long_3x2 = new ArithmeticProblemIterator<>(
+	public static ArithmeticProblemIterator<Long> long_4x1 = new ArithmeticProblemIterator<>(
 			MUL,
-			long_3x2_generator);
+			long_4x1_generator);
 
-	private static LongOperandsGenerator long_3x3_generator = LongOperandsGenerator.builder()
+	private static LongOperandsGenerator long_5x1_generator = LongOperandsGenerator.builder()
 			.withNumberOfOperands(2)
-			.withMultiplierDigits(1)
 			.withMultiplicandDigits(5)
+			.withMultiplierDigits(1)
 			.build();
-	public static ArithmeticProblemIterator<Long> long_3x3 = new ArithmeticProblemIterator<>(
+	public static ArithmeticProblemIterator<Long> long_5x1 = new ArithmeticProblemIterator<>(
 			MUL,
-			long_3x3_generator);
+			long_5x1_generator);
 
 }

@@ -31,7 +31,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class PdfPrinter {
 
 	private static final int HALF_INCH = 36;
-	public static String NEW_PAGE = "***********************************************"; 
+	public static String NEW_PAGE = "***********************************************";
 
 	private final Rectangle pageSize;
 	private final float marginLeft;
@@ -84,12 +84,11 @@ public class PdfPrinter {
 		// write to document
 		document.open();
 
-		
 		String line = input.readLine();
 		Paragraph paragraph = new Paragraph();
 		paragraph.setFont(font);
-		while (line != null) {		
-			if(NEW_PAGE.equals(line)) {
+		while (line != null) {
+			if (NEW_PAGE.equals(line)) {
 				document.add(paragraph);
 				document.newPage();
 				paragraph = new Paragraph();
@@ -106,52 +105,26 @@ public class PdfPrinter {
 		document.add(paragraph);
 		document.close();
 	}
-	
-	private void print2(BufferedReader input, String outputPdfFileName)
-			throws DocumentException, FileNotFoundException, IOException {
-		Document document = new Document(pageSize, marginLeft, marginRight, marginTop, marginBottom);
-
-		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(outputPdfFileName));
-		writer.setPageEvent(new HeaderFooterPageEvent());
-		// watermark
-		writer.setPageEvent(new WatermarkPageEvent());
-
-		// write to document
-		document.open();
-
-		
-		String line = input.readLine();
-		Paragraph paragraph = new Paragraph();
-		paragraph.setFont(font);
-		while (line != null) {
-			paragraph.add(new Chunk(line));
-			paragraph.add(Chunk.NEWLINE);
-			// document.newPage();
-			// document.add(new Paragraph("Testing.", font));
-			// document.newPage();
-			line = input.readLine();
-		}
-		document.add(paragraph);
-		document.close();
-	}
 
 	static class HeaderFooterPageEvent extends PdfPageEventHelper {
-	    Font ffont = new Font(Font.FontFamily.UNDEFINED, 9, Font.ITALIC);
-	    
-	    public void onEndPage(PdfWriter writer, Document document) {
-	        PdfContentByte cb = writer.getDirectContent();
-	        Phrase header = new Phrase("LAKSHITA INAKONDA", ffont);
-	        Phrase footer = new Phrase("Early to bed and early to rise makes us healthy, wealthy and wise", ffont);
-	        ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
-	                header,
-	                (document.right() - document.left()) / 2 + document.leftMargin(),
-	                document.top() + 10, 0);
-	        ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
-	                footer,
-	                (document.right() - document.left()) / 2 + document.leftMargin(),
-	                document.bottom() - 10, 0);
-	    }
+		Font ffont = new Font(Font.FontFamily.UNDEFINED, 9, Font.ITALIC);
+
+		public void onEndPage(PdfWriter writer, Document document) {
+			PdfContentByte cb = writer.getDirectContent();
+			String title = System.getProperty("sums.title", "LAKSHITA INAKONDA");
+			Phrase header = new Phrase(title, ffont);
+			Phrase footer = new Phrase("Do not give up, the beginning is always the hardest", ffont);
+			ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
+					header,
+					(document.right() - document.left()) / 2 + document.leftMargin(),
+					document.top() + 10, 0);
+			ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
+					footer,
+					(document.right() - document.left()) / 2 + document.leftMargin(),
+					document.bottom() - 10, 0);
+		}
 	}
+
 	static class WatermarkPageEvent extends PdfPageEventHelper {
 
 		Font FONT = new Font(Font.FontFamily.COURIER, 24, Font.BOLD, new GrayColor(0.92f));

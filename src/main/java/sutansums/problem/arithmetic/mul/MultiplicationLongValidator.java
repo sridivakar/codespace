@@ -15,6 +15,10 @@ public class MultiplicationLongValidator implements IValidator<Long> {
 	}
 
 	public boolean isValid(List<Long> operandList) {
+		if (operandList.get(0) < operandList.get(1)) {
+			return false;
+		}
+
 		Long multiplier = operandList.get(1);
 		if (tables != null && tables.size() > 0) {
 			int div = 1;

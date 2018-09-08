@@ -61,16 +61,16 @@ public class Grade2Vol1 {
 						SubtractionProblems.long_2x2_withOutBorrow.next());
 
 				List<String> row4 = WorkSheets.concatWithBottomAligned(
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next(),
-						MultiplicationProblems.long_1x2.next());
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next(),
+						MultiplicationProblems.long_1x1.next());
 
 				WorkSheets.getHeader(WorkSheets.A5_COLUMNS, WorkSheets.A5_HEADER_LINES)
 						.stream()
