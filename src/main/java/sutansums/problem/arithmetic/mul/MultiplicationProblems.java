@@ -3,6 +3,9 @@ package sutansums.problem.arithmetic.mul;
 import static sutansums.problem.arithmetic.common.ArithmeticSymbol.MUL;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import sutansums.problem.arithmetic.common.ArithmeticProblemIterator;
 import sutansums.problem.generator.LongOperandsGenerator;
@@ -61,5 +64,23 @@ public final class MultiplicationProblems {
 	public static ArithmeticProblemIterator<Long> long_5x1 = new ArithmeticProblemIterator<>(
 			MUL,
 			long_5x1_generator);
+
+	private static List<MultiplicationLongValidator> validator_table = IntStream.range(0,21)
+			.mapToObj(i -> new MultiplicationLongValidator(i))
+			.collect(Collectors.toList());
+
+	public static ArithmeticProblemIterator<Long> getForTable(int table) {
+		int multiplierDigits = 2;
+		if(table < 10) {
+			multiplierDigits = 1;
+		}
+		return new ArithmeticProblemIterator<>(MUL, LongOperandsGenerator.builder()
+						.withNumberOfOperands(2)
+						.withMultiplicandDigits(4)
+//						.withSameNoOfDigits()
+						.withMultiplierDigits(multiplierDigits)
+						.withValidator(validator_table.get(table))
+				.build());
+	}
 
 }

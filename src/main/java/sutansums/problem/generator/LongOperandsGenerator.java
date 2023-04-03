@@ -11,6 +11,27 @@ import sutansums.problem.validator.AllValidValidator;
 import sutansums.problem.validator.IValidator;
 
 public class LongOperandsGenerator implements IGenerator<Long> {
+
+	private static final long[] POWER_OF_10 = {
+			1,
+			10,
+			100,
+			1000,
+			10000,
+			100000,
+			1000000,
+			10000000,
+			100000000,
+			1000000000,
+			10000000000L,
+			100000000000L,
+			1000000000000L,
+			10000000000000L,
+			100000000000000L,
+			1000000000000000L,
+			10000000000000000L,
+
+	};
 	protected final int numberOfOperands;
 	protected final List<Integer> numberOfDigitsList;
 	private final boolean isExactNumberOfDigits;
@@ -31,15 +52,11 @@ public class LongOperandsGenerator implements IGenerator<Long> {
 		do {
 			operandList.clear();
 			for (int operandIndex = 0; operandIndex < numberOfOperands; operandIndex++) {
-				long digitTruncator = 1;
-				for (int i = 1; i <= getNumberOfDigits(operandIndex); i++) {
-					digitTruncator *= 10;
-				}
-
+				long digitTruncator = POWER_OF_10[getNumberOfDigits(operandIndex)];
 				Long number = 0L;
 				do {
 					number = Math.abs(random.nextLong()) % digitTruncator;
-				} while ((isExactNumberOfDigits && number < digitTruncator / 10));
+				} while ((isExactNumberOfDigits && number < digitTruncator / 10) || !validator.isValid(number, operandIndex));
 				operandList.add(number);
 			}
 		} while (!validator.isValid(operandList));
